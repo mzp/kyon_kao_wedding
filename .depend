@@ -1,0 +1,7 @@
+parse.cmi :
+compile.cmo : parse.cmi
+compile.cmx : parse.cmx
+main.cmo : compile.cmo
+main.cmx : compile.cmx
+parse.cmo : parse.cmi
+parse.cmx : parse.cmi
