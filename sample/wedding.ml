@@ -1,4 +1,4 @@
-let (♥  _ _ = "Happy Wedding!!"
+let (♥)  _ _ = "Happy Wedding!!"
 
 let message =
   `kyon_mm ♥ `kaori_t_spica
