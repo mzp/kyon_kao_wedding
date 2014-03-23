@@ -427,6 +427,7 @@ rule token = parse
   | "-"  { MINUS }
   | "-." { MINUSDOT }
   | "♥"  { INFIXOP4("♥") }
+  | "❤️"  { INFIXOP4("♥") }
 
   | "!" symbolchar +
             { PREFIXOP(Lexing.lexeme lexbuf) }

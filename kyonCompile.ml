@@ -73,7 +73,7 @@ let implementation ppf sourcefile outputprefix =
   let env = Compmisc.initial_env() in
   if !Clflags.print_types then begin
     try ignore(
-      Pparse.file ppf inputfile Parse.implementation ast_impl_magic_number
+      Pparse.file ppf inputfile KyonParse.implementation ast_impl_magic_number
       ++ print_if ppf Clflags.dump_parsetree Printast.implementation
       ++ print_if ppf Clflags.dump_source Pprintast.structure
       ++ Typemod.type_implementation sourcefile outputprefix modulename env
@@ -89,11 +89,8 @@ let implementation ppf sourcefile outputprefix =
   end else begin
     let objfile = outputprefix ^ ".cmo" in
     let oc = open_out_bin objfile in
-    let _ = print_endline "-" in
     try
-      Pparse.file ppf inputfile Parse.implementation ast_impl_magic_number
-      ++ (fun arg -> fprintf ppf "%a@." Printast.implementation arg;
-      arg )
+      Pparse.file ppf inputfile KyonParse.implementation ast_impl_magic_number
       ++ print_if ppf Clflags.dump_parsetree Printast.implementation
       ++ print_if ppf Clflags.dump_source Pprintast.structure
       ++ Typemod.type_implementation sourcefile outputprefix modulename env

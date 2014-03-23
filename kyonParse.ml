@@ -16,14 +16,14 @@
 
 let rec skip_phrase lexbuf =
   try
-    match Lexer.token lexbuf with
+    match KyonLexer.token lexbuf with
       Parser.SEMISEMI | Parser.EOF -> ()
     | _ -> skip_phrase lexbuf
   with
-    | Lexer.Error (Lexer.Unterminated_comment _, _) -> ()
-    | Lexer.Error (Lexer.Unterminated_string, _) -> ()
-    | Lexer.Error (Lexer.Unterminated_string_in_comment _, _) -> ()
-    | Lexer.Error (Lexer.Illegal_character _, _) -> skip_phrase lexbuf
+    | KyonLexer.Error (KyonLexer.Unterminated_comment _, _) -> ()
+    | KyonLexer.Error (KyonLexer.Unterminated_string, _) -> ()
+    | KyonLexer.Error (KyonLexer.Unterminated_string_in_comment _, _) -> ()
+    | KyonLexer.Error (KyonLexer.Illegal_character _, _) -> skip_phrase lexbuf
 ;;
 
 let maybe_skip_phrase lexbuf =
@@ -34,16 +34,15 @@ let maybe_skip_phrase lexbuf =
 
 let wrap parsing_fun lexbuf =
   try
-    print_endline "wrap!";
-    Lexer.init ();
-    let ast = parsing_fun Lexer.token lexbuf in
+    KyonLexer.init ();
+    let ast = parsing_fun KyonLexer.token lexbuf in
     Parsing.clear_parser();
     ast
   with
-  | Lexer.Error(Lexer.Unterminated_comment _, _) as err -> raise err
-  | Lexer.Error(Lexer.Unterminated_string, _) as err -> raise err
-  | Lexer.Error(Lexer.Unterminated_string_in_comment _, _) as err -> raise err
-  | Lexer.Error(Lexer.Illegal_character _, _) as err ->
+  | KyonLexer.Error(KyonLexer.Unterminated_comment _, _) as err -> raise err
+  | KyonLexer.Error(KyonLexer.Unterminated_string, _) as err -> raise err
+  | KyonLexer.Error(KyonLexer.Unterminated_string_in_comment _, _) as err -> raise err
+  | KyonLexer.Error(KyonLexer.Illegal_character _, _) as err ->
       if !Location.input_name = "//toplevel//" then skip_phrase lexbuf;
       raise err
   | Syntaxerr.Error _ as err ->

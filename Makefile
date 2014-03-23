@@ -31,13 +31,13 @@ INCLUDES_DEP=-I +compiler-libs
 # Requires unix!
 COMPFLAGS= $(INCLUDES_DEP) -I +unix
 
-MODULES= lexer parse compile main
+MODULES= kyonLexer kyonParse kyonCompile main
 
 OBJS=		$(addsuffix .cmo, $(MODULES))
 
 XOBJS=		$(addsuffix .cmx, $(MODULES))
 
-kyon: $(OBJS)
+kyon_byte: $(OBJS)
 	ocamlc -o $@ -I +compiler-libs ocamlcommon.cma ocamlbytecomp.cma $(OBJS)
 
 clean::

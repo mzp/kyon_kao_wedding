@@ -15,23 +15,23 @@ open Clflags
 open Compenv
 
 let process_interface_file ppf name =
-  Compile.interface ppf name (output_prefix name)
+  KyonCompile.interface ppf name (output_prefix name)
 
 let process_implementation_file ppf name =
   let opref = output_prefix name in
-  Compile.implementation ppf name opref;
+  KyonCompile.implementation ppf name opref;
   objfiles := (opref ^ ".cmo") :: !objfiles
 
 let process_file ppf name =
   if Filename.check_suffix name ".ml"
   || Filename.check_suffix name ".mlt" then begin
     let opref = output_prefix name in
-    Compile.implementation ppf name opref;
+    KyonCompile.implementation ppf name opref;
     objfiles := (opref ^ ".cmo") :: !objfiles
   end
   else if Filename.check_suffix name !Config.interface_suffix then begin
     let opref = output_prefix name in
-    Compile.interface ppf name opref;
+    KyonCompile.interface ppf name opref;
     if !make_package then objfiles := (opref ^ ".cmi") :: !objfiles
   end
   else if Filename.check_suffix name ".cmo"
@@ -45,7 +45,7 @@ let process_file ppf name =
   else if Filename.check_suffix name ext_dll then
     dllibs := name :: !dllibs
   else if Filename.check_suffix name ".c" then begin
-    Compile.c_file name;
+    KyonCompile.c_file name;
     ccobjs := (Filename.chop_suffix (Filename.basename name) ".c" ^ ext_obj)
               :: !ccobjs
   end
