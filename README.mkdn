@@ -1,0 +1,25 @@
+Custom OCaml compiler for wedding LT
+====================================
+
+![Sample](https://raw.github.com/mzp/kyon_kao_wedding/master/wedding.png)
+
+概要
+----
+
+[kyon_mm * kaori_t_spica 結婚祝いLT大会 in Nagoya](http://peatix.com/event/31723)で話すために作った
+改造版のOCamlコンパイラです。
+`sample/wedding.ml` のようにハートマークを中置演算子として利用できます。
+
+注意点
+------
+
+ * 愛の意味は定義されていないので、使う側で適切な意味を与えてください
+ * 右結合の演算子ですので相手を他の相手に取られないように適切な型を与えることを推奨します。
+
+ビルド方法/使い方
+-----------------
+
+    $ make
+    $ ./kyon_byte -o wedding sample/wedding.ml
+    $ ./wedding
+
